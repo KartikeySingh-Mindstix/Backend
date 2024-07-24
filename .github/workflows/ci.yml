@@ -41,6 +41,7 @@ jobs:
     - name: Pull and run Docker Compose
       run: docker-compose -f docker-compose.yml up -d
       env:
+        DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
         JWT_SECRET: ${{ secrets.JWT_SECRET }}
         MONGO_URI: ${{ secrets.MONGO_URI }}
         PORT: ${{ secrets.PORT }}
