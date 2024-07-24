@@ -26,6 +26,21 @@ jobs:
       uses: docker/build-push-action@v2
       with:
         context: .
-        file: ./Dockerfile
+        file: ./Dockerfile.dev
         push: true
         tags: ${{secrets.DOCKER_USERNAME}}/todo-backend:latest
+
+
+  deploy:
+    needs: build_and_push  # This job needs to succeed before starting
+    runs-on: self-hosted  # Runs on a self-hosted runner
+    steps:
+    - name: Check out the repo
+      uses: actions/checkout@v2  # Checks out your repository under $GITHUB_WORKSPACE again
+
+    - name: Pull and run Docker Compose
+      run: docker-compose -f docker-compose.yml up -d
+      env:
+        JWT_SECRET: ${{ secrets.JWT_SECRET }}
+        MONGO_URI: ${{ secrets.MONGO_URI }}
+        PORT: ${{ secrets.PORT }}
