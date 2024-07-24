@@ -1,7 +1,7 @@
 version: '3.8'
 services:
   todo-backend:
-    image: ${secrets.DOCKER_USERNAME}/todo-backend:latest
+    image: ${DOCKER_USERNAME}/todo-backend:latest
     ports:
       - "${PORT}:${PORT}"
     environment:
